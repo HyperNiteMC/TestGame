@@ -14,13 +14,13 @@ import java.util.Map;
 
 public class TestGameMechanic implements GameMechanic {
 
-    private Plugin plugin;
-    private PlayerManager playerManager;
+    private final PlayerManager playerManager;
+    private final ArenaConfig arenaConfig;
     private LinkedHashMap<InGameState, SectionTask> tasks = new LinkedHashMap<>();
 
     public TestGameMechanic(Plugin plugin){
-        this.plugin = plugin;
         this.playerManager = new TestPlayerManager();
+        this.arenaConfig = new GameArenaConfig(plugin);
         State1 one = new State1();
         State2 two = new State2();
         State3 three = new State3();
@@ -31,7 +31,7 @@ public class TestGameMechanic implements GameMechanic {
 
     @Override
     public ArenaConfig getArenaConfig() {
-        return new GameArenaConfig(plugin);
+        return arenaConfig;
     }
 
     @Override
