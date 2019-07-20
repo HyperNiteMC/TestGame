@@ -36,4 +36,9 @@ public class GameArena implements Arena {
     public Map<String, List<Location>> getLocationsMap() {
         return locations;
     }
+
+    @Override
+    public List<Location> getWarp(String s) {
+        return this.locations.get(s);
+    }
 }
