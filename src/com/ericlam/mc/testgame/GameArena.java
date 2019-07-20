@@ -2,6 +2,7 @@ package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.Arena;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -33,6 +34,11 @@ public class GameArena implements Arena {
     }
 
     @Override
+    public String getDisplayName() {
+        return ChatColor.GOLD +  "TestGame's Arena";
+    }
+
+    @Override
     public Map<String, List<Location>> getLocationsMap() {
         return locations;
     }
@@ -40,5 +46,10 @@ public class GameArena implements Arena {
     @Override
     public List<Location> getWarp(String s) {
         return this.locations.get(s);
+    }
+
+    @Override
+    public String[] getInfo() {
+        return new String[]{"arena: "+getArenaName(), "author: "+getAuthor(), "display: "+getArenaName(), "world: "+getWorld().getName()};
     }
 }

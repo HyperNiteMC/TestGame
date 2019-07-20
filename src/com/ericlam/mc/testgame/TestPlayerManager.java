@@ -56,17 +56,17 @@ public class TestPlayerManager implements PlayerManager {
         player.setGameMode(GameMode.ADVENTURE);
     }
 
-    private void replacePlayer(GamePlayer player){
-        this.gamePlayers.removeIf(p->p.getPlayer().equals(player.getPlayer()));
-        this.gamePlayers.add(player);
-    }
-
     @Override
-    public void setWaitngPlayer(Player player) {
+    public void setWaitingPlayer(Player player) {
         GamePlayer gamePlayer = new TestGamePlayer(player, GamePlayer.Status.WAITING);
         this.replacePlayer(gamePlayer);
         Bukkit.broadcastMessage("Set "+player.getName()+" to WaitingPlayer");
         player.setGameMode(GameMode.ADVENTURE);
+    }
+
+    private void replacePlayer(GamePlayer player){
+        this.gamePlayers.removeIf(p->p.getPlayer().equals(player.getPlayer()));
+        this.gamePlayers.add(player);
     }
 
 

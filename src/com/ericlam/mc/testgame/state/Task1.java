@@ -1,6 +1,5 @@
 package com.ericlam.mc.testgame.state;
 
-import com.ericlam.mc.minigames.core.arena.Arena;
 import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
@@ -34,8 +33,7 @@ public class Task1 extends TestTask {
     @Override
     public void onFinish() {
         Bukkit.broadcastMessage("Task1 countdown finished");
-        Arena finalArena = MinigamesCore.getApi().getGameManager().getLobbyManager().getFinalResult();
-        MinigamesCore.getApi().getGameManager().getArenaManager().setFinalArena(finalArena);
+        MinigamesCore.getApi().getGameManager().getLobbyManager().runFinalResult();
     }
 
     @Override
