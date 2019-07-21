@@ -6,8 +6,8 @@ import com.ericlam.mc.minigames.core.arena.ArenaMechanic;
 import com.ericlam.mc.minigames.core.game.GameMechanic;
 import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
-import com.ericlam.mc.testgame.state.*;
-import org.bukkit.plugin.Plugin;
+import com.ericlam.mc.testgame.states.*;
+import com.ericlam.mc.testgame.tasks.*;
 
 import java.util.LinkedHashMap;
 
@@ -18,16 +18,20 @@ public class TestGameMechanic implements GameMechanic {
     private final ArenaMechanic arenaMechanic;
     private LinkedHashMap<InGameState, SectionTask> tasks = new LinkedHashMap<>();
 
-    public TestGameMechanic(Plugin plugin){
+    public TestGameMechanic(ArenaConfig arenaConfig){
         this.playerManager = new TestPlayerManager();
-        this.arenaConfig = new GameArenaConfig(plugin);
-        this.arenaMechanic = new TestArenaMechanic(plugin);
-        State1 one = new State1();
-        State2 two = new State2();
-        State3 three = new State3();
-        tasks.put(one, new Task1(playerManager,two));
-        tasks.put(two, new Task2(playerManager, three));
-        tasks.put(three, new Task3(playerManager, null));
+        this.arenaConfig = arenaConfig;
+        this.arenaMechanic = new TestArenaMechanic();
+        LobbyState lobby = new LobbyState();
+        Game1State one = new Game1State();
+        Game2State two = new Game2State();
+        Game3State three = new Game3State();
+        EndState end = new EndState();
+        tasks.put(lobby, new VotingTask(playerManager,one));
+        tasks.put(one, new Game1Task(playerManager, two));
+        tasks.put(two, new Game2Task(playerManager, three));
+        tasks.put(three, new Game3Task(playerManager, end));
+        tasks.put(end, new EndTask(playerManager, null));
     }
 
     @Override

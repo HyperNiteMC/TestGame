@@ -2,3 +2,7 @@ name: TestGame
 main: com.ericlam.mc.testgame.main.TestGame
 version: 0.0.1
 depend: [Minigames-Core]
+commands:
+  testgame:
+    aliases: [tg]
+    description: TestGame Arena Command

@@ -1,12 +1,12 @@
-package com.ericlam.mc.testgame.state;
+package com.ericlam.mc.testgame.states;
 
 import com.ericlam.mc.minigames.core.game.InGameState;
 
-public class State2 implements InGameState {
-
+public class LobbyState implements InGameState {
 
     @Override
     public String getStateName() {
-        return "section-two";
+        return "lobby";
     }
+
 }
