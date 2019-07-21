@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameRule;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -31,8 +32,7 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
 
     private FileConfiguration config;
 
-
-    private Location location;
+    private ConfigurationSection lobby;
 
     public GameArenaConfig(Plugin plugin) {
         super(plugin, "config.yml");
@@ -45,7 +45,7 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
         config = map.get("config.yml");
         this.maxLocPerWarp = config.getInt("max-locations-per-warp");
         this.maxLoadArenas = config.getInt("max-arenas");
-        this.location = Optional.ofNullable(config.getConfigurationSection("lobby")).map(LocationSerializer::mapToLocation).map(Optional::get).orElse(null);
+        lobby = config.getConfigurationSection("lobby");
         this.prefix = ChatColor.translateAlternateColorCodes('&', Optional.ofNullable(config.getString("prefix")).orElse(""));
     }
 
@@ -71,7 +71,7 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
 
     @Override
     public Location getLobbyLocation() {
-        return location;
+        return lobby == null ? null : LocationSerializer.mapToLocation(lobby).orElse(null);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
             config.createSection("lobby", LocationSerializer.locToConfigSection(location));
             try {
                 config.save(new File(getPlugin().getDataFolder(), "config.yml"));
-                this.location = location;
+                this.lobby = config.getConfigurationSection("lobby");
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
