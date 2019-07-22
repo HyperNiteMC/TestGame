@@ -16,6 +16,7 @@ public class VotingTask extends TestTask {
     @Override
     public void initTimer() {
         Bukkit.broadcastMessage("VotingTask started");
+        playerManager.testCasted();
     }
 
     @Override

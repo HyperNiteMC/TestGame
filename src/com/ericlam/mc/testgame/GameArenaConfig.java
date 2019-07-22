@@ -2,6 +2,7 @@ package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.ArenaConfig;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.hypernite.mc.hnmc.core.config.ConfigSetter;
 import com.hypernite.mc.hnmc.core.config.Extract;
 import com.hypernite.mc.hnmc.core.utils.converters.LocationSerializer;
@@ -65,8 +66,12 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     }
 
     @Override
-    public ImmutableList<String> getAllowWarps() {
-        return ImmutableList.of("tp-one", "tp-two", "tp-three");
+    public ImmutableMap<String, Integer> getAllowWarps() {
+        return ImmutableMap.of(
+                "tp-one", 3,
+                "tp-two",3,
+                "tp-three",3
+        );
     }
 
     @Override

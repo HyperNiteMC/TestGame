@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TestPlayerManager implements PlayerManager {
 
@@ -18,26 +17,6 @@ public class TestPlayerManager implements PlayerManager {
     @Override
     public ImmutableList<GamePlayer> getTotalPlayers() {
         return ImmutableList.copyOf(gamePlayers);
-    }
-
-    @Override
-    public ImmutableList<GamePlayer> getSpectators() {
-        return ImmutableList.copyOf(gamePlayers.stream().filter(p->p.getStatus() == GamePlayer.Status.SPECTATING).collect(Collectors.toList()));
-    }
-
-    @Override
-    public ImmutableList<GamePlayer> getGamePlayer() {
-        return ImmutableList.copyOf(gamePlayers.stream().filter(p->p.getStatus() == GamePlayer.Status.GAMING).collect(Collectors.toList()));
-    }
-
-    @Override
-    public ImmutableList<GamePlayer> getWaitingPlayer() {
-        return ImmutableList.copyOf(gamePlayers.stream().filter(p->p.getStatus() == GamePlayer.Status.WAITING).collect(Collectors.toList()));
-    }
-
-    @Override
-    public GamePlayer findPlayer(Player player) {
-        return this.gamePlayers.stream().filter(p->p.getPlayer().equals(player)).findAny().orElseThrow();
     }
 
     @Override
@@ -67,6 +46,10 @@ public class TestPlayerManager implements PlayerManager {
     private void replacePlayer(GamePlayer player){
         this.gamePlayers.removeIf(p->p.getPlayer().equals(player.getPlayer()));
         this.gamePlayers.add(player);
+    }
+
+    public void testCasted(){
+        Bukkit.broadcastMessage("I am TestPlayerManager");
     }
 
 
