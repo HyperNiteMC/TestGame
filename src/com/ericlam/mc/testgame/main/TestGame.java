@@ -1,6 +1,7 @@
 package com.ericlam.mc.testgame.main;
 
 import com.ericlam.mc.minigames.core.MinigamesAPI;
+import com.ericlam.mc.minigames.core.Registration;
 import com.ericlam.mc.minigames.core.arena.ArenaConfig;
 import com.ericlam.mc.minigames.core.event.section.GamePreEndEvent;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
@@ -24,23 +25,17 @@ import java.util.stream.Collectors;
 
 public class TestGame extends JavaPlugin implements Listener {
 
-    private ConfigManager configManager;
-    private PlayerManager playerManager;
-
-    @Override
-    public void onLoad() {
-        ArenaConfig config = new GameArenaConfig(this);
-        configManager = HyperNiteMC.getAPI().registerConfig((ConfigSetter)config);
-        configManager.setMsgConfig("config.yml");
-        TestGameMechanic mechanic = new TestGameMechanic(config);
-        playerManager = mechanic.getPlayerManager();
-        MinigamesCore.getApi().registerGame(mechanic);
-        this.getLogger().info("Mechanics Registered");
-    }
 
     @Override
     public void onEnable() {
-        MinigamesAPI api = MinigamesCore.getApi();
+        ArenaConfig config = new GameArenaConfig(this);
+        ConfigManager configManager = HyperNiteMC.getAPI().registerConfig((ConfigSetter) config);
+        configManager.setMsgConfig("config.yml");
+        TestGameMechanic mechanic = new TestGameMechanic(config);
+        PlayerManager playerManager = mechanic.getPlayerManager();
+        MinigamesCore.getRegistration().registerGame(mechanic);
+        this.getLogger().info("Mechanics Registered");
+        Registration api = MinigamesCore.getRegistration();
         String prefix = configManager.getData("prefix", String.class).orElse("");
         api.registerArenaCommand(new GameDefaultCommand(configManager), prefix, this);
         this.getLogger().info("Command registered");
