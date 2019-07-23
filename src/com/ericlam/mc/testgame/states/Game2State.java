@@ -8,4 +8,9 @@ public class Game2State implements InGameState {
     public String getStateName() {
         return "game-two";
     }
+
+    @Override
+    public String getMotd() {
+        return "two";
+    }
 }

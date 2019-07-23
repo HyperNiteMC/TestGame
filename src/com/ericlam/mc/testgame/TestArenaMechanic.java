@@ -28,6 +28,6 @@ public class TestArenaMechanic implements ArenaMechanic {
 
     @Override
     public void saveExtraArenaSetting(FileConfiguration fileConfiguration, Arena arena) {
-        fileConfiguration.set("send-title", ((GameCreateArena)arena).isSendTitle());
+        fileConfiguration.set("send-title", arena.castTo(GameCreateArena.class).isSendTitle());
     }
 }

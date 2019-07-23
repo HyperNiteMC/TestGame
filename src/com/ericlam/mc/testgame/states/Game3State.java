@@ -7,4 +7,9 @@ public class Game3State implements InGameState {
     public String getStateName() {
         return "game-three";
     }
+
+    @Override
+    public String getMotd() {
+        return "three";
+    }
 }

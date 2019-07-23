@@ -2,28 +2,26 @@ package com.ericlam.mc.testgame.tasks;
 
 import com.ericlam.mc.minigames.core.arena.Arena;
 import com.ericlam.mc.minigames.core.game.GameState;
-import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.testgame.GameCreateArena;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import javax.annotation.Nullable;
-
 public class EndTask extends TestTask {
 
-    public EndTask(PlayerManager playerManager, @Nullable InGameState nextState) {
-        super(playerManager, nextState);
+
+    public EndTask(PlayerManager playerManager) {
+        super(playerManager);
     }
 
     @Override
     public void initTimer() {
-        MinigamesCore.getApi().getGameManager().setState(GameState.ENDED);
+        MinigamesCore.getApi().getGameManager().endGame(playerManager.getGamePlayer(),null, false);
         playerManager.getTotalPlayers().forEach(p->playerManager.setSpectator(p.getPlayer()));
         Bukkit.broadcastMessage("Game END");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
-        GameCreateArena gameArena = (GameCreateArena) arena;
+        GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aGAME END",20, 40, 20));
         }
@@ -45,6 +43,7 @@ public class EndTask extends TestTask {
             p.getPlayer().teleportAsync(lobby);
             playerManager.setWaitingPlayer(p.getPlayer());
         });
+        MinigamesCore.getApi().getGameManager().setState(GameState.STOPPED);
     }
 
     @Override

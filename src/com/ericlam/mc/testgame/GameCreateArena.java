@@ -1,9 +1,6 @@
 package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.CreateArena;
-import com.ericlam.mc.minigames.core.exception.arena.create.LocationMaxReachedException;
-import com.ericlam.mc.minigames.core.exception.arena.create.WarpNotExistException;
-import com.ericlam.mc.testgame.main.TestGame;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,7 +8,6 @@ import org.bukkit.World;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class GameCreateArena implements CreateArena{
@@ -104,14 +100,6 @@ public class GameCreateArena implements CreateArena{
     @Override
     public void setDisplayName(String s) {
         this.displayName = s;
-    }
-
-    @Override
-    public void addLocation(String s, Location location) throws WarpNotExistException, LocationMaxReachedException {
-        List<Location> locs = Optional.ofNullable(this.locations.get(s)).orElseThrow(() -> new WarpNotExistException(s));
-        int maxLoc = TestGame.getPlugin(TestGame.class).getMaxLoc();
-        if (locs.size() >= maxLoc) throw new LocationMaxReachedException(s);
-        locs.add(location);
     }
 
     @Override

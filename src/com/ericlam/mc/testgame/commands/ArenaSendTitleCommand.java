@@ -26,7 +26,7 @@ public class ArenaSendTitleCommand extends ArenaCommandNode {
     protected boolean executeArenaOperation(@Nonnull Player player, @Nonnull List<String> list, @Nonnull ArenaCreateManager arenaCreateManager) throws ArenaNotExistException {
         final String arena = list.get(0);
         final boolean bool = Boolean.parseBoolean(list.get(1));
-        GameCreateArena createArena = (GameCreateArena)arenaCreateManager.getCreateArena(arena);
+        GameCreateArena createArena = arenaCreateManager.getCreateArena(arena).castTo(GameCreateArena.class);
         createArena.setSendTitle(bool);
         createArena.setChanged(true);
         final String path = "arena.set-title";

@@ -10,5 +10,10 @@ public class Game1State implements InGameState {
         return "game-one";
     }
 
+    @Override
+    public String getMotd() {
+        return "one";
+    }
+
 
 }

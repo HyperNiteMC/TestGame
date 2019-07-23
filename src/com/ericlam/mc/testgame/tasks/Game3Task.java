@@ -13,8 +13,10 @@ import org.bukkit.Location;
 import java.util.List;
 
 public class Game3Task extends TestTask {
-    public Game3Task(PlayerManager playerManager, InGameState nextState) {
-        super(playerManager, nextState);
+
+
+    public Game3Task(PlayerManager playerManager) {
+        super(playerManager);
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Game3Task extends TestTask {
         MinigamesCore.getApi().getGameManager().setState(GameState.IN_GAME);
         Bukkit.broadcastMessage("Game Section 3 Task started");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
-        GameCreateArena gameArena = (GameCreateArena) arena;
+        GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aSection 3 Started",20, 40, 20));
         }

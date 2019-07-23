@@ -3,7 +3,6 @@ package com.ericlam.mc.testgame.tasks;
 import com.ericlam.mc.minigames.core.arena.Arena;
 import com.ericlam.mc.minigames.core.character.GamePlayer;
 import com.ericlam.mc.minigames.core.game.GameState;
-import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.testgame.GameCreateArena;
@@ -14,8 +13,8 @@ import java.util.List;
 
 public class Game1Task extends TestTask {
 
-    public Game1Task(PlayerManager playerManager, InGameState nextState) {
-        super(playerManager, nextState);
+    public Game1Task(PlayerManager playerManager) {
+        super(playerManager);
     }
 
     @Override
@@ -24,7 +23,7 @@ public class Game1Task extends TestTask {
         playerManager.getWaitingPlayer().forEach(p->playerManager.setGamePlayer(p.getPlayer()));
         Bukkit.broadcastMessage("Game Section 1 Task started");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
-        GameCreateArena gameArena = (GameCreateArena) arena;
+        GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aSection 1 Started",20, 40, 20));
         }

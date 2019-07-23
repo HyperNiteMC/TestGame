@@ -1,7 +1,6 @@
 package com.ericlam.mc.testgame.tasks;
 
 import com.ericlam.mc.minigames.core.arena.Arena;
-import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.testgame.GameCreateArena;
@@ -9,8 +8,9 @@ import org.bukkit.Bukkit;
 
 public class VotingTask extends TestTask {
 
-    public VotingTask(PlayerManager playerManager, InGameState nextState) {
-        super(playerManager, nextState);
+
+    public VotingTask(PlayerManager playerManager) {
+        super(playerManager);
     }
 
     @Override

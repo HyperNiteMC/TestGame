@@ -25,9 +25,6 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     private final File folder;
     private int maxLoadArenas;
 
-    @Extract(name = "max-loc")
-    private int maxLocPerWarp;
-
     @Extract
     private String prefix;
 
@@ -44,7 +41,6 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     @Override
     public void loadConfig(Map<String, FileConfiguration> map) {
         config = map.get("config.yml");
-        this.maxLocPerWarp = config.getInt("max-locations-per-warp");
         this.maxLoadArenas = config.getInt("max-arenas");
         lobby = config.getConfigurationSection("lobby");
         this.prefix = ChatColor.translateAlternateColorCodes('&', Optional.ofNullable(config.getString("prefix")).orElse(""));
@@ -68,6 +64,7 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     @Override
     public ImmutableMap<String, Integer> getAllowWarps() {
         return ImmutableMap.of(
+
                 "tp-one", 3,
                 "tp-two",3,
                 "tp-three",3
@@ -77,6 +74,11 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     @Override
     public Location getLobbyLocation() {
         return lobby == null ? null : LocationSerializer.mapToLocation(lobby).orElse(null);
+    }
+
+    @Override
+    public String getFallBackServer() {
+        return "lobby";
     }
 
     @Override
