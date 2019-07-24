@@ -20,7 +20,7 @@ public class Game1Task extends TestTask {
     @Override
     public void initTimer() {
         MinigamesCore.getApi().getGameManager().setState(GameState.IN_GAME);
-        playerManager.getWaitingPlayer().forEach(p->playerManager.setGamePlayer(p.getPlayer()));
+        playerManager.getWaitingPlayer().forEach(playerManager::setGamePlayer);
         Bukkit.broadcastMessage("Game Section 1 Task started");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
         GameCreateArena gameArena = arena.castTo(GameCreateArena.class);

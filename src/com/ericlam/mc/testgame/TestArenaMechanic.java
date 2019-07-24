@@ -15,7 +15,7 @@ public class TestArenaMechanic implements ArenaMechanic {
     @Override
     public CreateArena loadCreateArena(FileConfiguration fileConfiguration, Arena arena) {
         boolean sendTitle = fileConfiguration.getBoolean("send-title");
-        return new GameCreateArena(arena.getLocationsMap(), arena.getAuthor(), arena.getWorld(), arena.getArenaName(), arena.getDisplayName(), sendTitle);
+        return new GameCreateArena(arena.getLocationsMap(), arena.getAuthor(), arena.getWorld(), arena.getArenaName(), arena.getDisplayName(), sendTitle, arena.getDescription());
     }
 
 

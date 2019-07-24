@@ -25,7 +25,6 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     private final File folder;
     private int maxLoadArenas;
 
-    @Extract
     private String prefix;
 
     private FileConfiguration config;
@@ -79,6 +78,11 @@ public class GameArenaConfig extends ConfigSetter implements ArenaConfig {
     @Override
     public String getFallBackServer() {
         return "lobby";
+    }
+
+    @Override
+    public String getGamePrefix() {
+        return prefix;
     }
 
     @Override

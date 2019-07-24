@@ -20,32 +20,29 @@ public class TestPlayerManager implements PlayerManager {
     }
 
     @Override
-    public void setSpectator(Player player) {
-        GamePlayer gamePlayer = new TestGamePlayer(player, GamePlayer.Status.SPECTATING);
-        this.replacePlayer(gamePlayer);
-        Bukkit.broadcastMessage("Set "+player.getName()+" to Spectator");
-        player.setGameMode(GameMode.SPECTATOR);
+    public GamePlayer buildGamePlayer(Player player) {
+        return new TestGamePlayer(player, null);
     }
 
     @Override
-    public void setGamePlayer(Player player) {
-        GamePlayer gamePlayer = new TestGamePlayer(player, GamePlayer.Status.GAMING);
-        this.replacePlayer(gamePlayer);
-        Bukkit.broadcastMessage("Set "+player.getName()+" to GamePlayer");
-        player.setGameMode(GameMode.ADVENTURE);
+    public void setGamePlayer(GamePlayer gamePlayer) {
+        gamePlayer.setStatus(GamePlayer.Status.GAMING);
+        Bukkit.broadcastMessage("Set "+gamePlayer.getPlayer().getName()+" to GamePlayer");
+        gamePlayer.getPlayer().setGameMode(GameMode.ADVENTURE);
     }
 
     @Override
-    public void setWaitingPlayer(Player player) {
-        GamePlayer gamePlayer = new TestGamePlayer(player, GamePlayer.Status.WAITING);
-        this.replacePlayer(gamePlayer);
-        Bukkit.broadcastMessage("Set "+player.getName()+" to WaitingPlayer");
-        player.setGameMode(GameMode.ADVENTURE);
+    public void setWaitingPlayer(GamePlayer gamePlayer) {
+        gamePlayer.setStatus(GamePlayer.Status.WAITING);
+        Bukkit.broadcastMessage("Set "+gamePlayer.getPlayer().getName()+" to WaitingPlayer");
+        gamePlayer.getPlayer().setGameMode(GameMode.ADVENTURE);
     }
 
-    private void replacePlayer(GamePlayer player){
-        this.gamePlayers.removeIf(p->p.getPlayer().equals(player.getPlayer()));
-        this.gamePlayers.add(player);
+    @Override
+    public void setSpectator(GamePlayer gamePlayer) {
+        gamePlayer.setStatus(GamePlayer.Status.SPECTATING);
+        Bukkit.broadcastMessage("Set "+gamePlayer.getPlayer().getName()+" to Spectator");
+        gamePlayer.getPlayer().setGameMode(GameMode.SPECTATOR);
     }
 
     public void testCasted(){
@@ -59,7 +56,7 @@ public class TestPlayerManager implements PlayerManager {
     }
 
     @Override
-    public void removePlayer(Player player) {
-        this.gamePlayers.removeIf(p->p.getPlayer().equals(player));
+    public void removePlayer(GamePlayer gamePlayer) {
+        gamePlayers.remove(gamePlayer);
     }
 }

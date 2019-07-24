@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,23 +19,25 @@ public class GameCreateArena implements CreateArena{
     private World world;
     private String arenaName;
     private String displayName;
+    private List<String> description;
 
     //Custom setting
     private boolean sendTitle;
 
     // load
-    public GameCreateArena(Map<String, List<Location>> locations, String author, World world, String arenaName, String displayName, boolean sendTitle) {
+    public GameCreateArena(Map<String, List<Location>> locations, String author, World world, String arenaName, String displayName, boolean sendTitle, List<String> description) {
         this.locations = locations;
         this.author = author;
         this.world = world;
         this.arenaName = arenaName;
         this.displayName = displayName;
         this.sendTitle = sendTitle;
+        this.description = description;
     }
 
     // new
     public GameCreateArena(String author, World world, String arenaName, String displayName) {
-        this(new LinkedHashMap<>(), author, world, arenaName, displayName, false);
+        this(new LinkedHashMap<>(), author, world, arenaName, displayName, false, new ArrayList<>());
     }
 
     public boolean isSendTitle() {
@@ -68,6 +71,11 @@ public class GameCreateArena implements CreateArena{
     @Override
     public Map<String, List<Location>> getLocationsMap() {
         return locations;
+    }
+
+    @Override
+    public List<String> getDescription() {
+        return description;
     }
 
     @Override

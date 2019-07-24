@@ -1,6 +1,5 @@
 package com.ericlam.mc.testgame.main;
 
-import com.ericlam.mc.minigames.core.MinigamesAPI;
 import com.ericlam.mc.minigames.core.Registration;
 import com.ericlam.mc.minigames.core.arena.ArenaConfig;
 import com.ericlam.mc.minigames.core.event.section.GamePreEndEvent;
@@ -36,8 +35,7 @@ public class TestGame extends JavaPlugin implements Listener {
         MinigamesCore.getRegistration().registerGame(mechanic);
         this.getLogger().info("Mechanics Registered");
         Registration api = MinigamesCore.getRegistration();
-        String prefix = configManager.getData("prefix", String.class).orElse("");
-        api.registerArenaCommand(new GameDefaultCommand(configManager), prefix, this);
+        api.registerArenaCommand(new GameDefaultCommand(configManager), this);
         this.getLogger().info("Command registered");
         api.registerGameTask(new Game1State(),new Game1Task(playerManager));
         api.registerGameTask(new Game2State(), new Game2Task(playerManager));

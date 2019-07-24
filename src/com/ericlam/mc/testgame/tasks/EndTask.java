@@ -18,7 +18,7 @@ public class EndTask extends TestTask {
     @Override
     public void initTimer() {
         MinigamesCore.getApi().getGameManager().endGame(playerManager.getGamePlayer(),null, false);
-        playerManager.getTotalPlayers().forEach(p->playerManager.setSpectator(p.getPlayer()));
+        playerManager.getTotalPlayers().forEach(playerManager::setSpectator);
         Bukkit.broadcastMessage("Game END");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
         GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
@@ -41,7 +41,7 @@ public class EndTask extends TestTask {
         Location lobby = MinigamesCore.getApi().getGameManager().getGameMechanic().getArenaConfig().getLobbyLocation();
         playerManager.getTotalPlayers().forEach(p-> {
             p.getPlayer().teleportAsync(lobby);
-            playerManager.setWaitingPlayer(p.getPlayer());
+            playerManager.setWaitingPlayer(p);
         });
         MinigamesCore.getApi().getGameManager().setState(GameState.STOPPED);
     }
