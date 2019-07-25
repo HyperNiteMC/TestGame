@@ -6,7 +6,6 @@ import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.testgame.GameCreateArena;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 
 public class EndTask extends TestTask {
 
@@ -38,9 +37,8 @@ public class EndTask extends TestTask {
     @Override
     public void onFinish() {
         Bukkit.broadcastMessage("Game has ended. send back you to lobby");
-        Location lobby = MinigamesCore.getApi().getGameManager().getGameMechanic().getArenaConfig().getLobbyLocation();
         playerManager.getTotalPlayers().forEach(p-> {
-            p.getPlayer().teleportAsync(lobby);
+            MinigamesCore.getApi().getLobbyManager().tpLobbySpawn(p.getPlayer());
             playerManager.setWaitingPlayer(p);
         });
         MinigamesCore.getApi().getGameManager().setState(GameState.STOPPED);

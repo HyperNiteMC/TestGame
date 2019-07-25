@@ -1,6 +1,8 @@
 package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.CreateArena;
+import com.mysql.fabric.xmlrpc.base.Array;
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -80,14 +82,16 @@ public class GameCreateArena implements CreateArena{
 
     @Override
     public String[] getInfo() {
-        return new String[]{
+        String[] info = new String[]{
                 "arena: "+getArenaName(),
                 "author: "+getAuthor(),
                 "display: "+getDisplayName(),
                 "world: "+getWorld().getName(),
                 "sendTitle: "+isSendTitle(),
-                "warps: "+locations.keySet().stream().map(l->l.concat("("+locations.get(l).size()+")")).collect(Collectors.joining(", "))
+                "warps: "+locations.keySet().stream().map(l->l.concat("("+locations.get(l).size()+")")).collect(Collectors.joining(", ")),
         };
+        String[] story = this.getDescription().toArray(String[]::new);
+        return (String[])ArrayUtils.addAll(info, story);
     }
 
     @Override

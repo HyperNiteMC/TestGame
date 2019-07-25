@@ -17,7 +17,7 @@ public class ArenaSendTitleCommand extends ArenaCommandNode {
     private final ConfigManager configManager;
 
     public ArenaSendTitleCommand(ConfigManager configManager, CommandNode parent) {
-        super(configManager.getPureMessage("prefix"), parent, "settitle", Perm.OWNER, "設置是否發送 title", "<arena> <boolean>", "set-title");
+        super( parent, "settitle", Perm.OWNER, "設置是否發送 title", "<arena> <boolean>", "set-title");
         this.configManager = configManager;
     }
 
@@ -30,7 +30,7 @@ public class ArenaSendTitleCommand extends ArenaCommandNode {
         createArena.setSendTitle(bool);
         createArena.setChanged(true);
         final String path = "arena.set-title";
-        player.sendMessage(prefix + configManager.getPureMessage(path).replace("<arena>", arena).replace("<bool>", bool+""));
+        player.sendMessage(configManager.getMessage(path).replace("<arena>", arena).replace("<bool>", bool+""));
         return true;
     }
 }

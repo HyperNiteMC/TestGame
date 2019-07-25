@@ -21,7 +21,9 @@ public class TestPlayerManager implements PlayerManager {
 
     @Override
     public GamePlayer buildGamePlayer(Player player) {
-        return new TestGamePlayer(player, null);
+        TestGamePlayer gamePlayer = new TestGamePlayer(player, null);
+        gamePlayers.add(gamePlayer);
+        return gamePlayer;
     }
 
     @Override
