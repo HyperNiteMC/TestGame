@@ -8,20 +8,14 @@ import org.bukkit.Bukkit;
 
 public class VotingTask extends TestTask {
 
-
-    public VotingTask(PlayerManager playerManager) {
-        super(playerManager);
-    }
+    private PlayerManager playerManager;
 
     @Override
-    public void initTimer() {
+    public void initTimer(PlayerManager playerManager) {
         Bukkit.broadcastMessage("VotingTask started");
-        playerManager.testCasted();
+        this.playerManager = playerManager;
     }
 
-    @Override
-    public void teleport(PlayerManager playerManager) {
-    }
 
     @Override
     public void onCancel() {

@@ -6,16 +6,14 @@ import com.ericlam.mc.minigames.core.main.MinigamesCore;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.testgame.GameCreateArena;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 
 public class EndTask extends TestTask {
 
 
-    public EndTask(PlayerManager playerManager) {
-        super(playerManager);
-    }
-
+    private PlayerManager playerManager;
     @Override
-    public void initTimer() {
+    public void initTimer(PlayerManager playerManager) {
         MinigamesCore.getApi().getGameManager().endGame(playerManager.getGamePlayer(),null, false);
         playerManager.getTotalPlayers().forEach(playerManager::setSpectator);
         Bukkit.broadcastMessage("Game END");
@@ -24,11 +22,9 @@ public class EndTask extends TestTask {
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aGAME END",20, 40, 20));
         }
+        this.playerManager = playerManager;
     }
 
-    @Override
-    public void teleport(PlayerManager playerManager) {
-    }
 
     @Override
     public void onCancel() {
@@ -39,7 +35,8 @@ public class EndTask extends TestTask {
         Bukkit.broadcastMessage("Game has ended. send back you to lobby");
         playerManager.getTotalPlayers().forEach(p-> {
             MinigamesCore.getApi().getLobbyManager().tpLobbySpawn(p.getPlayer());
-            playerManager.setWaitingPlayer(p);
+            p.getPlayer().setGameMode(GameMode.ADVENTURE);
+            p.getPlayer().getInventory().clear();
         });
         MinigamesCore.getApi().getGameManager().setState(GameState.STOPPED);
     }

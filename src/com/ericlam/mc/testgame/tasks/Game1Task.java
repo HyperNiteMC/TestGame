@@ -13,25 +13,21 @@ import java.util.List;
 
 public class Game1Task extends TestTask {
 
-    public Game1Task(PlayerManager playerManager) {
-        super(playerManager);
-    }
+    private PlayerManager playerManager;
 
     @Override
-    public void initTimer() {
+    public void initTimer(PlayerManager playerManager) {
+        MinigamesCore.getApi().getGameManager().setState(GameState.PRESTART);
         MinigamesCore.getApi().getGameManager().setState(GameState.IN_GAME);
         playerManager.getWaitingPlayer().forEach(playerManager::setGamePlayer);
+        this.playerManager = playerManager;
         Bukkit.broadcastMessage("Game Section 1 Task started");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
         GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aSection 1 Started",20, 40, 20));
         }
-    }
-
-    @Override
-    public void teleport(PlayerManager playerManager) {
-        List<Location> one = MinigamesCore.getApi().getArenaManager().getFinalArena().getLocationsMap().get("tp-one");
+        List<Location> one = arena.getLocationsMap().get("tp-one");
         List<GamePlayer> players = playerManager.getTotalPlayers();
         for (int i = 0; i < players.size(); i++) {
             if (i == one.size()) break;

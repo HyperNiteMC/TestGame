@@ -13,25 +13,16 @@ import org.bukkit.Location;
 import java.util.List;
 
 public class Game3Task extends TestTask {
-
-
-    public Game3Task(PlayerManager playerManager) {
-        super(playerManager);
-    }
-
+    private PlayerManager playerManager;
     @Override
-    public void initTimer() {
-        MinigamesCore.getApi().getGameManager().setState(GameState.IN_GAME);
+    public void initTimer(PlayerManager playerManager) {
         Bukkit.broadcastMessage("Game Section 3 Task started");
         Arena arena = MinigamesCore.getApi().getArenaManager().getFinalArena();
         GameCreateArena gameArena = arena.castTo(GameCreateArena.class);
         if (gameArena.isSendTitle()){
             playerManager.getTotalPlayers().forEach(p->p.getPlayer().sendTitle("","§aSection 3 Started",20, 40, 20));
         }
-    }
-
-    @Override
-    public void teleport(PlayerManager playerManager) {
+        this.playerManager = playerManager;
         List<Location> one = MinigamesCore.getApi().getArenaManager().getFinalArena().getLocationsMap().get("tp-three");
         List<GamePlayer> players = playerManager.getTotalPlayers();
         for (int i = 0; i < players.size(); i++) {

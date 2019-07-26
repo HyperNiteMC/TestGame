@@ -2,18 +2,15 @@ package com.ericlam.mc.testgame.tasks;
 
 import com.ericlam.mc.minigames.core.SectionTask;
 import com.ericlam.mc.minigames.core.manager.PlayerManager;
-import com.ericlam.mc.testgame.TestPlayerManager;
+import com.ericlam.mc.testgame.TestPlayerHandler;
 
 public abstract class TestTask implements SectionTask {
 
-    protected final TestPlayerManager playerManager;
     private boolean running;
 
-    public TestTask(PlayerManager playerManager) {
-        this.playerManager = playerManager.castTo(TestPlayerManager.class);
+    public TestTask() {
         this.running = false;
     }
-
 
     @Override
     public boolean isRunning() {
