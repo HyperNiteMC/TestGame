@@ -1,4 +1,1 @@
 maxArenas: 3
-prefix: "&e測試遊戲// &7"
-arena:
-  set-title: "成功設置 <arena> 發送 Title 為 <bool>"
