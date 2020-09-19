@@ -43,9 +43,9 @@ public class TestGame extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        var configManager = HyperNiteMC.getAPI().getFactory().getConfigFactory(this).register(GameConfig.class).dump();
-        var gameConfig = configManager.getConfigAs(GameConfig.class);
-        ArenaConfig config = new GameArenaConfig(this, gameConfig);
+        var configManager = HyperNiteMC.getAPI().getFactory().getConfigFactory(this)
+                .register(GameConfig.class).register(GameMessageConfig.class).dump();
+        ArenaConfig config = new GameArenaConfig(this, configManager);
         Compulsory com = MinigamesCore.getRegistration().getCompulsory();
         GamePlayerHandler gamePlayerHandler = new TestPlayerHandler();
         ArenaMechanic arenaMechanic = new TestArenaMechanic();

@@ -2,6 +2,7 @@ package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.ArenaConfig;
 import com.google.common.collect.ImmutableMap;
+import com.hypernite.mc.hnmc.core.managers.YamlManager;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -17,9 +18,10 @@ public class GameArenaConfig implements ArenaConfig {
     private final String prefix;
     private final GameConfig gameConfig;
 
-    public GameArenaConfig(Plugin plugin, GameConfig gameConfig) {
-        this.gameConfig = gameConfig;
-        this.prefix = gameConfig.getPrefix();
+    public GameArenaConfig(Plugin plugin, YamlManager yamlManager) {
+        this.gameConfig = yamlManager.getConfigAs(GameConfig.class);
+        GameMessageConfig gameMessageConfig = yamlManager.getConfigAs(GameMessageConfig.class);
+        this.prefix = gameMessageConfig.getPrefix();
         this.folder = new File(plugin.getDataFolder(), "Arenas");
     }
 
