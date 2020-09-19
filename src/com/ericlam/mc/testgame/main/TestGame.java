@@ -12,13 +12,9 @@ import com.ericlam.mc.minigames.core.factory.scoreboard.GameBoard;
 import com.ericlam.mc.minigames.core.game.GameState;
 import com.ericlam.mc.minigames.core.game.InGameState;
 import com.ericlam.mc.minigames.core.main.MinigamesCore;
-import com.ericlam.mc.minigames.core.manager.PlayerManager;
 import com.ericlam.mc.minigames.core.registable.Compulsory;
 import com.ericlam.mc.minigames.core.registable.Voluntary;
-import com.ericlam.mc.testgame.GameArenaConfig;
-import com.ericlam.mc.testgame.TestArenaMechanic;
-import com.ericlam.mc.testgame.TestGameStatsHandler;
-import com.ericlam.mc.testgame.TestPlayerHandler;
+import com.ericlam.mc.testgame.*;
 import com.ericlam.mc.testgame.commands.GameDefaultCommand;
 import com.ericlam.mc.testgame.states.Game1State;
 import com.ericlam.mc.testgame.states.Game2State;
@@ -26,9 +22,7 @@ import com.ericlam.mc.testgame.states.Game3State;
 import com.ericlam.mc.testgame.tasks.*;
 import com.hypernite.mc.hnmc.core.builders.InventoryBuilder;
 import com.hypernite.mc.hnmc.core.builders.ItemStackBuilder;
-import com.hypernite.mc.hnmc.core.config.ConfigSetter;
 import com.hypernite.mc.hnmc.core.main.HyperNiteMC;
-import com.hypernite.mc.hnmc.core.managers.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -49,9 +43,9 @@ public class TestGame extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        ArenaConfig config = new GameArenaConfig(this);
-        ConfigManager configManager = HyperNiteMC.getAPI().registerConfig((ConfigSetter) config);
-        configManager.setMsgConfig("config.yml");
+        var configManager = HyperNiteMC.getAPI().getFactory().getConfigFactory(this).register(GameConfig.class).dump();
+        var gameConfig = configManager.getConfigAs(GameConfig.class);
+        ArenaConfig config = new GameArenaConfig(this, gameConfig);
         Compulsory com = MinigamesCore.getRegistration().getCompulsory();
         GamePlayerHandler gamePlayerHandler = new TestPlayerHandler();
         ArenaMechanic arenaMechanic = new TestArenaMechanic();
@@ -63,14 +57,14 @@ public class TestGame extends JavaPlugin implements Listener {
         Voluntary vol = MinigamesCore.getRegistration().getVoluntary();
         com.registerArenaCommand(new GameDefaultCommand(configManager), this);
         this.getLogger().info("Command registered");
-        vol.registerGameTask(game1State,new Game1Task());
+        vol.registerGameTask(game1State, new Game1Task());
         vol.registerGameTask(game2State, new Game2Task());
         vol.registerGameTask(game3State, new Game3Task());
         com.registerEndTask(new EndTask());
         com.registerLobbyTask(new VotingTask());
         com.registerVoteGUI(new InventoryBuilder(1, "&a地圖投票"), 3, 5, 7);
         this.getLogger().info("Game Task registered");
-        this.getServer().getPluginManager().registerEvents(this ,this);
+        this.getServer().getPluginManager().registerEvents(this, this);
         GameFactory factory = MinigamesCore.getProperties().getGameFactory();
         this.game1Board = factory.getScoreboardFactory()
                 .setTitle("&e第一場的計分版")
@@ -95,30 +89,30 @@ public class TestGame extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onGameEnd(GamePreEndEvent e){
-        Bukkit.broadcastMessage("Game End, Winners: "+e.getWinners().stream().map(p->p.getPlayer().getName()).collect(Collectors.joining(", ")));
-        Bukkit.broadcastMessage("Winner Team: "+e.getWinnerTeam());
+    public void onGameEnd(GamePreEndEvent e) {
+        Bukkit.broadcastMessage("Game End, Winners: " + e.getWinners().stream().map(p -> p.getPlayer().getName()).collect(Collectors.joining(", ")));
+        Bukkit.broadcastMessage("Winner Team: " + e.getWinnerTeam());
         compassTracker.destroy();
     }
 
     @EventHandler
-    public void onGameStart(GameStartEvent e){
+    public void onGameStart(GameStartEvent e) {
         compassTracker.launch();
     }
 
     @EventHandler
-    public void onInGameStateSwitch(InGameStateSwitchEvent e){
+    public void onInGameStateSwitch(InGameStateSwitchEvent e) {
         if (e.getInGameState() == null) return;
         InGameState inGameState = e.getInGameState();
-        if (inGameState == game1State){
-            e.getGamingPlayer().forEach(p->game1Board.addPlayer(p));
-        }else if (inGameState == game2State){
+        if (inGameState == game1State) {
+            e.getGamingPlayer().forEach(p -> game1Board.addPlayer(p));
+        } else if (inGameState == game2State) {
             game1Board.destroy();
-            e.getGamingPlayer().forEach(p->game2Board.addPlayer(p));
-        }else if (inGameState == game3State){
+            e.getGamingPlayer().forEach(p -> game2Board.addPlayer(p));
+        } else if (inGameState == game3State) {
             game2Board.destroy();
-            e.getGamingPlayer().forEach(p->game3Board.addPlayer(p));
-        }else if (e.getGameState() == GameState.PREEND){
+            e.getGamingPlayer().forEach(p -> game3Board.addPlayer(p));
+        } else if (e.getGameState() == GameState.PREEND) {
             game3Board.destroy();
         }
     }

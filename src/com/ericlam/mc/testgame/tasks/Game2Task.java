@@ -42,13 +42,14 @@ public class Game2Task extends TestTask {
     }
 
     @Override
-    public void run(long l) {
+    public long run(long l) {
         playerManager.getGamePlayer().forEach(p->{
             p.getPlayer().setLevel((int)l);
             if (l <= 10){
                 p.getPlayer().sendMessage("Game Section 2 Task end in "+l+" secs");
             }
         });
+        return l;
     }
 
     @Override

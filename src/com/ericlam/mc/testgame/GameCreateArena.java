@@ -1,7 +1,6 @@
 package com.ericlam.mc.testgame;
 
 import com.ericlam.mc.minigames.core.arena.CreateArena;
-import com.mysql.fabric.xmlrpc.base.Array;
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GameCreateArena implements CreateArena{
+public class GameCreateArena implements CreateArena {
 
     private boolean changed;
     private Map<String, List<Location>> locations;
@@ -21,7 +20,7 @@ public class GameCreateArena implements CreateArena{
     private World world;
     private String arenaName;
     private String displayName;
-    private List<String> description;
+    private final List<String> description;
 
     //Custom setting
     private boolean sendTitle;
@@ -83,15 +82,15 @@ public class GameCreateArena implements CreateArena{
     @Override
     public String[] getInfo() {
         String[] info = new String[]{
-                "arena: "+getArenaName(),
-                "author: "+getAuthor(),
-                "display: "+getDisplayName(),
-                "world: "+getWorld().getName(),
-                "sendTitle: "+isSendTitle(),
-                "warps: "+locations.keySet().stream().map(l->l.concat("("+locations.get(l).size()+")")).collect(Collectors.joining(", ")),
+                "arena: " + getArenaName(),
+                "author: " + getAuthor(),
+                "display: " + getDisplayName(),
+                "world: " + getWorld().getName(),
+                "sendTitle: " + isSendTitle(),
+                "warps: " + locations.keySet().stream().map(l -> l.concat("(" + locations.get(l).size() + ")")).collect(Collectors.joining(", ")),
         };
         String[] story = this.getDescription().toArray(String[]::new);
-        return (String[])ArrayUtils.addAll(info, story);
+        return (String[]) ArrayUtils.addAll(info, story);
     }
 
     @Override

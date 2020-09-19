@@ -28,7 +28,7 @@ public class VotingTask extends TestTask {
     }
 
     @Override
-    public void run(long l) {
+    public long run(long l) {
         playerManager.getWaitingPlayer().forEach(p->{
             p.getPlayer().setLevel((int)l);
             if (l == 13){
@@ -41,6 +41,7 @@ public class VotingTask extends TestTask {
                 p.getPlayer().sendMessage("VotingTask end in "+l+" secs");
             }
         });
+        return l;
     }
 
     @Override

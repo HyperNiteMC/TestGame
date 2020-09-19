@@ -2,17 +2,11 @@ package com.ericlam.mc.testgame.states;
 
 import com.ericlam.mc.minigames.core.game.InGameState;
 
-public class Game1State implements InGameState {
+public class Game1State extends InGameState {
 
 
-    @Override
-    public String getStateName() {
-        return "game-one";
-    }
-
-    @Override
-    public String getMotd() {
-        return "one";
+    public Game1State() {
+        super("game-one", "one");
     }
 
 

@@ -26,7 +26,7 @@ public class TestPlayerHandler implements GamePlayerHandler {
     }
 
     @Override
-    public boolean shouldStartGame(ImmutableList<GamePlayer> immutableList) {
-        return immutableList.size() >= 1;
+    public int requireStart() {
+        return 1;
     }
 }

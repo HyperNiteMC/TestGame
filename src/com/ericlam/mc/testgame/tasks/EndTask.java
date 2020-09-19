@@ -42,13 +42,14 @@ public class EndTask extends TestTask {
     }
 
     @Override
-    public void run(long l) {
+    public long run(long l) {
         playerManager.getSpectators().forEach(p->{
             p.getPlayer().sendActionBar(l+"");
             if (l <= 5){
                 p.getPlayer().sendMessage("Game Ended in "+l+" secs");
             }
         });
+        return l;
     }
 
     @Override

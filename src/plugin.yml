@@ -1,6 +1,6 @@
 name: TestGame
 main: com.ericlam.mc.testgame.main.TestGame
-version: 0.0.1
+version: ${project.version}
 depend: [Minigames-Core]
 commands:
   testgame:

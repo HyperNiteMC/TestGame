@@ -8,16 +8,18 @@ public class TestGameStatsEditor implements GameStatsEditor {
     private int deaths;
     private int played;
     private int wins;
+    private double score;
 
-    public TestGameStatsEditor(int kills, int deaths, int played, int wins) {
+    public TestGameStatsEditor(int kills, int deaths, int played, int wins, double score) {
         this.kills = kills;
         this.deaths = deaths;
         this.played = played;
         this.wins = wins;
+        this.score = score;
     }
 
     public TestGameStatsEditor(){
-        this(0,0,0,0);
+        this(0,0,0,0, 0);
     }
 
     @Override
@@ -38,6 +40,11 @@ public class TestGameStatsEditor implements GameStatsEditor {
     @Override
     public void setWins(int i) {
         this.wins = i;
+    }
+
+    @Override
+    public void setScores(double v) {
+        this.score = v;
     }
 
     @Override
@@ -72,7 +79,7 @@ public class TestGameStatsEditor implements GameStatsEditor {
                 "Deaths: "+deaths,
                 "Played: "+played,
                 "Wins: "+wins,
-                "Scores: "+getScores()
+                "Scores: "+score
         };
     }
 }

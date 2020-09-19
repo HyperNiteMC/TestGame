@@ -3,8 +3,9 @@ package com.ericlam.mc.testgame.commands;
 import com.ericlam.mc.minigames.core.commands.ArenaCommandNode;
 import com.ericlam.mc.minigames.core.exception.arena.create.ArenaNotExistException;
 import com.ericlam.mc.minigames.core.manager.ArenaCreateManager;
+import com.ericlam.mc.testgame.GameConfig;
 import com.ericlam.mc.testgame.GameCreateArena;
-import com.hypernite.mc.hnmc.core.managers.ConfigManager;
+import com.hypernite.mc.hnmc.core.managers.YamlManager;
 import com.hypernite.mc.hnmc.core.misc.commands.CommandNode;
 import com.hypernite.mc.hnmc.core.misc.permission.Perm;
 import org.bukkit.entity.Player;
@@ -14,11 +15,11 @@ import java.util.List;
 
 public class ArenaSendTitleCommand extends ArenaCommandNode {
 
-    private final ConfigManager configManager;
+    private final GameConfig gameConfig;
 
-    public ArenaSendTitleCommand(ConfigManager configManager, CommandNode parent) {
-        super( parent, "settitle", Perm.OWNER, "設置是否發送 title", "<arena> <boolean>", "set-title");
-        this.configManager = configManager;
+    public ArenaSendTitleCommand(YamlManager configManager, CommandNode parent) {
+        super(parent, "settitle", Perm.OWNER, "設置是否發送 title", "<arena> <boolean>", "set-title");
+        this.gameConfig = configManager.getConfigAs(GameConfig.class);
     }
 
 
@@ -30,7 +31,7 @@ public class ArenaSendTitleCommand extends ArenaCommandNode {
         createArena.setSendTitle(bool);
         createArena.setChanged(true);
         final String path = "arena.set-title";
-        player.sendMessage(configManager.getMessage(path).replace("<arena>", arena).replace("<bool>", bool+""));
+        player.sendMessage(gameConfig.get(path).replace("<arena>", arena).replace("<bool>", bool + ""));
         return true;
     }
 }

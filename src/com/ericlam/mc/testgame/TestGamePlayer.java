@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class TestGamePlayer implements GamePlayer {
 
-    private Player player;
+    private final Player player;
     private Status status;
 
     public TestGamePlayer(Player player, Status status) {
