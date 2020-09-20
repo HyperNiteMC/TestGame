@@ -33,12 +33,7 @@ public class EndTask extends TestTask {
     @Override
     public void onFinish() {
         Bukkit.broadcastMessage("Game has ended. send back you to lobby");
-        playerManager.getTotalPlayers().forEach(p-> {
-            MinigamesCore.getApi().getLobbyManager().tpLobbySpawn(p.getPlayer());
-            p.getPlayer().setGameMode(GameMode.ADVENTURE);
-            p.getPlayer().getInventory().clear();
-        });
-        MinigamesCore.getApi().getGameManager().setState(GameState.STOPPED);
+        MinigamesCore.getApi().getGameManager().setState(GameState.ENDED);
     }
 
     @Override
