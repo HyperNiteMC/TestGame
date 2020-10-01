@@ -29,6 +29,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class TestGame extends JavaPlugin implements Listener {
@@ -68,21 +71,26 @@ public class TestGame extends JavaPlugin implements Listener {
         GameFactory factory = MinigamesCore.getProperties().getGameFactory();
         this.game1Board = factory.getScoreboardFactory()
                 .setTitle("&e第一場的計分版")
-                .addLine("&a這是第一行", 12)
-                .addLine("&c這是第二行", 11)
-                .addLine("&b這是第三行", 10)
-                .addLine("&d去你嗎的", 9)
-                .setLine("3", "這是第四行", 8).build();
+                .addLine("&a==========", 11)
+                .addLine("&e時間: <time>", 10, (p, str) -> str.replace("<time>", LocalTime.now().toString()))
+                .setUpdateInterval(20L)
+                .addLine("&a==========", 9)
+                .build();
         this.game2Board = factory.getScoreboardFactory()
                 .setTitle("&d第二場的計分版")
-                .addLine("&a這是第一行", 12)
-                .addLine("&c這是第二行", 11)
-                .addLine("&b這是第三行", 10).build();
+                .addLine("&a==========", 12)
+                .addLine("&e遊戲模式: <gamemode>", 11, (p, str) -> str.replace("<gamemode>", p.getPlayer().getGameMode().name()))
+                .setUpdateInterval(10L)
+                .addLine("&a==========", 10).build();
         this.game3Board = factory.getScoreboardFactory()
                 .setTitle("&b第三場的計分版")
-                .addLine("&a這是第一行", 12)
-                .addLine("&c這是第二行", 11)
-                .addLine("&b這是第三行", 10).build();
+                .addLine("&a==========", 12)
+                .addLine("&e隨機數值: <random>", 11, (p, str) -> {
+                    var list = List.of("&eFUCK", "&6SHIT", "&aDIU", "&don9");
+                    return list.get(new Random().nextInt(list.size()));
+                })
+                .setUpdateInterval(10L)
+                .addLine("&a==========", 10).build();
         this.compassTracker = factory.getCompassFactory().setTrackerRange(30).setCaughtText("&e玩家&f <target> &7- &a距離 &f<distance>")
                 .setSearchingText("&b&l搜&r&7索中...", "&7搜&b&l索&r&7中...", "&7搜索&b&l中&r&7...").build();
         vol.addGameItem(8, new ItemStackBuilder(Material.COMPASS).build());
